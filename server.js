@@ -76,6 +76,19 @@ function attatchListeners(client) {
 
 }
 
+function initializePassanger(client, rider) {
+	// client.join(rider.number);
+	if (driversMap.has(rider.number)) {
+		//ride has started
+		if (driversMap.get(rider.number) === 'finished_ride') {
+			client.emit('ride_finished');
+		}
+	} else {
+		//ride not started
+		client.emit('ride_not_started');
+	}
+}
+
 io.on('connection', client => {
 	attatchListeners(client);
 	console.log(client.id, 'connected')
